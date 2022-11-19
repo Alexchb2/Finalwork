@@ -52,7 +52,7 @@ public class BuyTest {
         val dashboardPage = new DashboardPage();
         val buyPage = dashboardPage.Buy();
         buyPage.validBuy(cardInfo);
-        buyPage.successfullBuy();
+        buyPage.cardNumberErrorVisible();
     }
 
     @Test
@@ -191,7 +191,7 @@ public class BuyTest {
         val dashboardPage = new DashboardPage();
         val buyPage = dashboardPage.Buy();
         buyPage.validBuy(cardInfo);
-        buyPage.expiredCardErrorVisible();
+        buyPage.yearErrorVisible();
     }
 
     @Test
