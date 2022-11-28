@@ -128,7 +128,7 @@ public class BuyTest {
         val dashboardPage = new DashboardPage();
         val buyPage = dashboardPage.Buy();
         buyPage.validBuy(cardInfo);
-        buyPage.monthErrorVisible();
+        buyPage.monthErrorPeriodVisible();
     }
 
     @Test
@@ -137,7 +137,7 @@ public class BuyTest {
         val dashboardPage = new DashboardPage();
         val buyPage = dashboardPage.Buy();
         buyPage.validBuy(cardInfo);
-        buyPage.monthErrorVisible();
+        buyPage.monthErrorPeriodVisible();
     }
 
     @Test

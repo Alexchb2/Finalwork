@@ -7,8 +7,7 @@ import data.DataHelper;
 import java.time.Duration;
 
 import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selectors.byCssSelector;
-import static com.codeborne.selenide.Selectors.byText;
+import static com.codeborne.selenide.Selectors.*;
 import static com.codeborne.selenide.Selenide.$;
 
 public class BuyPage {
@@ -19,21 +18,23 @@ public class BuyPage {
     private SelenideElement owner = $(byText("Владелец")).parent().$(".input__control");
     private SelenideElement cvc = $(byText("CVC/CVV")).parent().$(".input__control");
     private SelenideElement continueButton = $(byText("Продолжить"));
-    private SelenideElement cardNumberError = $(byText("Номер карты")).parent().$(".input__sub");
-    private SelenideElement monthError = $(byText("Месяц")).parent().$(".input__sub");
-    private SelenideElement yearError = $(byText("Год")).parent().$(".input__sub");
-    private SelenideElement expiredCardError = $(byText("Истек срок действия карты")).parent().$(".input__sub");
-    private SelenideElement ownerError = $(byText("Владелец")).parent().$(".input__sub");
-    private SelenideElement cvcError = $(byText("CVC/CVV")).parent().$(".input__sub");
+    private SelenideElement cardNumberError = $(byText("Номер карты")).parent().$(withText("Неверный формат"));
+    private SelenideElement monthError = $(byText("Месяц")).parent().$(withText("Неверный формат"));
+    private SelenideElement monthErrorPeriod = $(byText("Месяц")).parent().$(withText("Неверно указан срок действия карты"));
 
-    public DashboardPage validBuy(DataHelper.CardInfo info) {
+    private SelenideElement yearError = $(byText("Год")).parent().$(withText("Неверный формат"));
+    private SelenideElement expiredCardError = $(byText("Истек срок действия карты")).parent().$(".input__sub");
+    private SelenideElement ownerError = $(byText("Владелец")).parent().$(withText("Поле обязательно для заполнения"));
+    private SelenideElement cvcError = $(byText("CVC/CVV")).parent().$(withText("Неверный формат"));
+    private SelenideElement messageDecline = $(withText("Ошибка! Банк отказал в проведении операции."));
+
+    public void validBuy(DataHelper.CardInfo info) {
         cardNumber.setValue(info.getCardNumber());
         month.setValue(info.getMonth());
         year.setValue(info.getYear());
         owner.setValue(info.getOwner());
         cvc.setValue(info.getCvc());
         continueButton.click();
-        return new DashboardPage();
     }
 
     public void notValidBuy() {
@@ -49,6 +50,9 @@ public class BuyPage {
         cardNumberError.shouldBe(visible);
     }
 
+    public void monthErrorPeriodVisible() {
+        monthErrorPeriod.shouldBe(visible);
+    }
     public void monthErrorVisible() {
         monthError.shouldBe(visible);
     }
@@ -74,6 +78,6 @@ public class BuyPage {
     }
 
     public void declinedBuy() {
-        $(byCssSelector("div.notification.notification_status_error.notification_has-closer.notification_stick-to_right.notification_theme_alfa-on-white")).shouldBe(Condition.visible, Duration.ofSeconds(20));
+        messageDecline.shouldBe(visible, Duration.ofSeconds(15));
     }
 }
