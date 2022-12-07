@@ -13,13 +13,13 @@ import page.DashboardPage;
 
 import static com.codeborne.selenide.Selenide.open;
 import static data.DataHelper.*;
-import static data.SQLHelper.cleanDatabase;
+import static data.SQLHelper.cleanTable;
 
 public class BuyTest {
 
     @AfterAll
     static void teardown() {
-        cleanDatabase();
+        cleanTable();
     }
 
     @BeforeAll
